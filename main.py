@@ -36,9 +36,9 @@ def reset_game():
     global direction
     game_segments.clear()
     direction = 3
-    game_segments.append(SnakeSegment(globals.grid_size*3,globals.grid_size*2))
-    game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2))
-    game_segments.append(SnakeSegment(globals.grid_size*1,globals.grid_size*2))
+    game_segments.append(SnakeSegment(globals.grid_size*3,globals.grid_size*2,direction))
+    game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2,direction))
+    game_segments.append(SnakeSegment(globals.grid_size*1,globals.grid_size*2,direction))
     
            
 game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
@@ -104,7 +104,7 @@ def update():
         new_x = game_segments[0].x + x_movement
         new_y = game_segments[0].y + y_movement
         
-        game_segments.insert(0,SnakeSegment(new_x,new_y))
+        game_segments.insert(0,SnakeSegment(new_x,new_y,direction))
         
      
         

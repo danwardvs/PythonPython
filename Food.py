@@ -15,7 +15,11 @@ from SnakeSegment import SnakeSegment
 myimage = pygame.image.load("food.png")
 imagerect = myimage.get_rect()
 
-class Food(SnakeSegment):
+class Food(object):
+    
+    def __init__ (self,new_x,new_y):
+        self.x=new_x
+        self.y=new_y
     
     def draw(self,new_screen):
         #pygame.draw.rect(new_screen,(255,0,0),[self.x,self.y,globals.grid_size,globals.grid_size],2)
