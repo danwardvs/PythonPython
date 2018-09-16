@@ -18,9 +18,10 @@ globals.init()
 
 x_movement = 50
 y_movement = 0
-speed = 10
+speed = 20
 tick = 0
 direction=3
+direction_old = 0
 moved = True
 eaten_food = False
 score = 0
@@ -38,14 +39,17 @@ def reset_game():
     direction = 3
     game_segments.append(SnakeSegment(globals.grid_size*3,globals.grid_size*2,direction))
     game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2,direction))
+    game_segments[1].set_type(1)
     game_segments.append(SnakeSegment(globals.grid_size*1,globals.grid_size*2,direction))
-    
+    game_segments[2].set_type(1)
+
            
 game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
 clock = pygame.time.Clock()
 
 def update():
     global direction
+    global direction_old
     global x_movement
     global y_movement
     global running
@@ -58,19 +62,28 @@ def update():
     
     for event in pygame.event.get():
         events = pygame.event.get()
-    
+        
+        
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT and direction != 3 and moved:
-               direction = 1
-               moved = False
+                direction_old = direction
+                direction = 1
+                moved = False
             if event.key == pygame.K_RIGHT and direction != 1 and moved:
+                direction_old = direction
+
                 direction = 3
                 moved = False
                
             if event.key == pygame.K_UP and direction != 4 and moved:
+                direction_old = direction
+
+                
                 direction = 2
                 moved = False
             if event.key == pygame.K_DOWN and direction != 2 and moved:
+                direction_old = direction
+
                 direction = 4
                 moved = False
             
@@ -95,8 +108,7 @@ def update():
     
     if(tick==speed):
         
-        print(str(game_segments[0].x) + "," + str(game_segments[0].y) +"|"+ str(game_food.x) + "," + str(game_food.y))
-        
+        #print(str(direction) + "," + str(direction_old))        
         moved = True
         
         tick=0
@@ -104,7 +116,12 @@ def update():
         new_x = game_segments[0].x + x_movement
         new_y = game_segments[0].y + y_movement
         
+        game_segments[0].set_type(1)
+        
         game_segments.insert(0,SnakeSegment(new_x,new_y,direction))
+        if(direction!=direction_old):
+            game_segments[1].set_direction_old(direction_old)
+            direction_old=direction
         
      
         
