@@ -26,12 +26,17 @@ class SnakeSegment(object):
     type = 0
     direction = 0
     direction_old = 0
+    printed = False
     
     def set_type(self,new_type):
         self.type = new_type
     
     def set_direction_old(self,new_direction_old):
         self.direction_old = new_direction_old
+        #print(str(self.direction) + "," + str(self.direction_old))
+    
+    def set_direction(self,new_direction):
+        self.direction = new_direction
          
     def __init__ (self,new_x,new_y,new_direction):
         self.x=new_x
@@ -60,10 +65,21 @@ class SnakeSegment(object):
             if((self.direction==2 or self.direction == 4) and self.direction_old == 0 ):
                 new_screen.blit(myimage, (self.x,self.y),(64*2,64,64,64))
             
-            print(str(self.direction) + "," + str(self.direction_old))
-            if(self.direction==2 and self.direction_old == 2 ):
+            if(self.direction_old!=0 and not self.printed):
+                print(str(self.direction) + "," + str(self.direction_old))
+                self.printed=True
+            
+            if((self.direction==1  and self.direction_old == 4 ) or (self.direction==2  and self.direction_old == 3 )):
+                new_screen.blit(myimage, (self.x,self.y),(64*2,64*2,64,64))
+                
+            if((self.direction==3  and self.direction_old == 2 ) or (self.direction==4  and self.direction_old == 1 )):
                 new_screen.blit(myimage, (self.x,self.y),(0,0,64,64))
-            if(self.direction==3 and self.direction_old == 3 ):
+            
+            if((self.direction==2  and self.direction_old == 1 ) or (self.direction==3  and self.direction_old == 4 )):
+                new_screen.blit(myimage, (self.x,self.y),(0,64,64,64))
+            
+            
+            if((self.direction==4  and self.direction_old == 3 ) or (self.direction==1  and self.direction_old == 2 )):
                 new_screen.blit(myimage, (self.x,self.y),(64*2,0,64,64))
             
             

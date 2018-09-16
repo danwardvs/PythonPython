@@ -58,31 +58,26 @@ def update():
     global moved
     global eaten_food
     global game_food
-    
+  
     
     for event in pygame.event.get():
-        events = pygame.event.get()
         
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT and direction != 3 and moved:
-                direction_old = direction
                 direction = 1
                 moved = False
             if event.key == pygame.K_RIGHT and direction != 1 and moved:
-                direction_old = direction
 
                 direction = 3
                 moved = False
                
             if event.key == pygame.K_UP and direction != 4 and moved:
-                direction_old = direction
 
                 
                 direction = 2
                 moved = False
             if event.key == pygame.K_DOWN and direction != 2 and moved:
-                direction_old = direction
 
                 direction = 4
                 moved = False
@@ -117,13 +112,12 @@ def update():
         new_y = game_segments[0].y + y_movement
         
         game_segments[0].set_type(1)
-        
         game_segments.insert(0,SnakeSegment(new_x,new_y,direction))
-        if(direction!=direction_old):
-            game_segments[1].set_direction_old(direction_old)
-            direction_old=direction
         
-     
+        if(direction_old!=direction):
+            print(str(direction) + "," + str(direction_old))
+            game_segments[1].set_direction_old(direction_old)
+            game_segments[1].set_direction(direction)
         
         
         for i in range(1,len(game_segments)-1):
@@ -136,13 +130,13 @@ def update():
             eaten_food=False
         if game_segments[0].x == game_food.x and game_segments[0].y == game_food.y:
             eaten_food=True
-            range_x=int(globals.screen_width/globals.grid_size)-1
-            range_y=int(globals.screen_height/globals.grid_size)-1
             game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
         
         
         if(game_segments[0].x>globals.range_x or game_segments[0].y>globals.range_y or game_segments[0].x<0 or game_segments[0].y<0):
             reset_game()
+            
+        direction_old=direction
 
 def draw():
     
