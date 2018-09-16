@@ -13,9 +13,9 @@ def init():
     global grid_size
     grid_size = 64
     global screen_width
-    screen_width = 800
+    screen_width = 1024
     global screen_height
-    screen_height = 600
+    screen_height = 768
     global range_x_divided
     global range_y_divided
     

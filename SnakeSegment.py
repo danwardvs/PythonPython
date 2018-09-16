@@ -81,6 +81,15 @@ class SnakeSegment(object):
             
             if((self.direction==4  and self.direction_old == 3 ) or (self.direction==1  and self.direction_old == 2 )):
                 new_screen.blit(myimage, (self.x,self.y),(64*2,0,64,64))
+        if(self.type==0):
+            if(self.direction==2):
+                new_screen.blit(myimage, (self.x,self.y),(64*3,64*2,64,64))
+            if(self.direction==3):
+                new_screen.blit(myimage, (self.x,self.y),(64*4,64*2,64,64))
+            if(self.direction==1):
+                new_screen.blit(myimage, (self.x,self.y),(64*3,64*3,64,64))
+            if(self.direction==4):
+                new_screen.blit(myimage, (self.x,self.y),(64*4,64*3,64,64))
             
             
             

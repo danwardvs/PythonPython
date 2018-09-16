@@ -18,7 +18,7 @@ globals.init()
 
 x_movement = 50
 y_movement = 0
-speed = 20
+speed = 10
 tick = 0
 direction=3
 direction_old = 0
@@ -41,7 +41,8 @@ def reset_game():
     game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2,direction))
     game_segments[1].set_type(1)
     game_segments.append(SnakeSegment(globals.grid_size*1,globals.grid_size*2,direction))
-    game_segments[2].set_type(1)
+    game_segments[2].set_type(0)
+
 
            
 game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
@@ -114,6 +115,7 @@ def update():
         game_segments[0].set_type(1)
         game_segments.insert(0,SnakeSegment(new_x,new_y,direction))
         
+        
         if(direction_old!=direction):
             print(str(direction) + "," + str(direction_old))
             game_segments[1].set_direction_old(direction_old)
@@ -128,6 +130,10 @@ def update():
             game_segments.pop(len(game_segments)-1)
         else:
             eaten_food=False
+        
+        game_segments[len(game_segments)-1].set_type(0)
+
+        
         if game_segments[0].x == game_food.x and game_segments[0].y == game_food.y:
             eaten_food=True
             game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
