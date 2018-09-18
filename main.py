@@ -18,7 +18,7 @@ globals.init()
 
 x_movement = 50
 y_movement = 0
-speed = 10
+speed = 15
 tick = 0
 direction=3
 direction_old = 0
@@ -121,10 +121,10 @@ def update():
             game_segments[1].set_direction_old(direction_old)
             game_segments[1].set_direction(direction)
         
-        
-        for i in range(1,len(game_segments)-1):
-            if game_segments[i].x == game_segments[0].x and game_segments[i].y == game_segments[0].y:
-                reset_game()
+        if(len(game_segments)>0):
+            for i in range(1,len(game_segments)-1):
+                if game_segments[i].x == game_segments[0].x and game_segments[i].y == game_segments[0].y:
+                    reset_game()
         
         if not eaten_food:
             game_segments.pop(len(game_segments)-1)
@@ -136,7 +136,22 @@ def update():
         
         if game_segments[0].x == game_food.x and game_segments[0].y == game_food.y:
             eaten_food=True
-            game_food=Food(random.randint(1,globals.range_x_divided)*globals.grid_size,random.randint(1,globals.range_y_divided)*globals.grid_size)
+            
+          
+            
+            found_result = False
+            new_y = 0
+            new_x = 0
+            
+            while not found_result:
+                found_result=True
+                new_x = random.randint(1,globals.range_x_divided)*globals.grid_size
+                new_y = random.randint(1,globals.range_y_divided)*globals.grid_size
+                for segment in game_segments:
+                    if segment.x == new_x and segment.y == new_y:
+                        found_result=False
+            
+            game_food=Food(new_x,new_y)
         
         
         if(game_segments[0].x>globals.range_x or game_segments[0].y>globals.range_y or game_segments[0].x<0 or game_segments[0].y<0):
