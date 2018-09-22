@@ -15,7 +15,7 @@ import globals
 
 myimage = pygame.image.load("r.png")
 imagerect = myimage.get_rect()
-
+print(type(myimage))
 
 
 class SnakeSegment(object):
