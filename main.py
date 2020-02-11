@@ -28,15 +28,19 @@ score = 0
 
 
 screen = pygame.display.set_mode((globals.screen_width,globals.screen_height))
-pygame.display.set_caption('Nice Window')
+pygame.display.set_caption('Score: 0')
 pygame.display.flip()
 
 game_segments = []
 
 def reset_game():
     global direction
+    global score
     game_segments.clear()
     direction = 3
+    score = 0
+    pygame.display.set_caption('Score: 0')
+
     game_segments.append(SnakeSegment(globals.grid_size*3,globals.grid_size*2,direction))
     game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2,direction))
     game_segments[1].set_type(1)
@@ -59,6 +63,7 @@ def update():
     global moved
     global eaten_food
     global game_food
+    global score
   
     
     for event in pygame.event.get():
@@ -125,6 +130,7 @@ def update():
             for i in range(1,len(game_segments)-1):
                 if game_segments[i].x == game_segments[0].x and game_segments[i].y == game_segments[0].y:
                     reset_game()
+                    break
         
         if not eaten_food:
             game_segments.pop(len(game_segments)-1)
@@ -136,6 +142,9 @@ def update():
         
         if game_segments[0].x == game_food.x and game_segments[0].y == game_food.y:
             eaten_food=True
+            score+=1
+            pygame.display.set_caption('Score: ' + str(score))
+
             
           
             
