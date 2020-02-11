@@ -25,10 +25,11 @@ direction_old = 0
 moved = True
 eaten_food = False
 score = 0
+high_score = 0
 
 
 screen = pygame.display.set_mode((globals.screen_width,globals.screen_height))
-pygame.display.set_caption('Score: 0')
+pygame.display.set_caption('Score: 0 ~~~ Highscore: 0')
 pygame.display.flip()
 
 game_segments = []
@@ -36,10 +37,11 @@ game_segments = []
 def reset_game():
     global direction
     global score
+    global high_score
     game_segments.clear()
     direction = 3
     score = 0
-    pygame.display.set_caption('Score: 0')
+    pygame.display.set_caption('Score: ' + str(score) + " ~~~ Highscore: " +str(high_score))
 
     game_segments.append(SnakeSegment(globals.grid_size*3,globals.grid_size*2,direction))
     game_segments.append(SnakeSegment(globals.grid_size*2,globals.grid_size*2,direction))
@@ -64,26 +66,27 @@ def update():
     global eaten_food
     global game_food
     global score
+    global high_score
   
     
     for event in pygame.event.get():
         
         
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and direction != 3 and moved:
+            if event.key == pygame.K_LEFT and direction != 3 and direction!=1 and moved:
                 direction = 1
                 moved = False
-            if event.key == pygame.K_RIGHT and direction != 1 and moved:
+            if event.key == pygame.K_RIGHT and direction != 1 and direction!=3 and moved:
 
                 direction = 3
                 moved = False
                
-            if event.key == pygame.K_UP and direction != 4 and moved:
+            if event.key == pygame.K_UP and direction != 4 and direction!=2 and moved:
 
                 
                 direction = 2
                 moved = False
-            if event.key == pygame.K_DOWN and direction != 2 and moved:
+            if event.key == pygame.K_DOWN and direction != 2 and direction != 4 and moved:
 
                 direction = 4
                 moved = False
@@ -143,7 +146,10 @@ def update():
         if game_segments[0].x == game_food.x and game_segments[0].y == game_food.y:
             eaten_food=True
             score+=1
-            pygame.display.set_caption('Score: ' + str(score))
+            if score>high_score:
+                high_score=score
+
+            pygame.display.set_caption('Score: ' + str(score) + ' ~~~ Highscore: ' + str(high_score))
 
             
           
